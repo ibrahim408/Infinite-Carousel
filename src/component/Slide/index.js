@@ -45,23 +45,7 @@ function Slide(props){
         </div>
     )
 }
-// const background = {
-//     background: "#e0e0e0"
-// }
 
-// const styles = {
-//     background: {
-//     },
-//     thirdSlide: {
-
-//     }
-// }
 
 export default React.memo(Slide);
 
-// style={{...{
-//     backgroundImage: width > 600 ? `url(${props.image})` : `url(${props.imageSmall})`,
-//     backgroundSize: 'cover',
-//     backgroundPosition: 'center',
-//     backgroundRepeat: 'no-repeat'
-// },...styles.background}}
