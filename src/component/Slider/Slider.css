@@ -1,0 +1,39 @@
+.slider-container {
+    height: 100vh;
+    background-color: blue;
+    position: relative;
+    overflow: hidden;
+}
+
+.slide-container {
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    width: fit-content;
+    background-color: green;
+}
+
+.arrow {
+    border-right: 2px solid; 
+    border-bottom: 2px solid;
+    height: 30px;
+    width: 30px;
+    z-index: 999;
+    color: white;
+}
+
+.left {
+    position: absolute;
+    left: 2em;
+    top: 50%;
+    transform: translateY(-50%);
+    transform: rotate(135deg);
+}
+
+.right {
+    position: absolute;
+    right: 2em;
+    top: 50%;
+    transform: translateY(-50%);
+    transform: rotate(-45deg);
+}
