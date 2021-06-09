@@ -1,6 +1,5 @@
 .slider-container {
     height: 100vh;
-    background-color: blue;
     position: relative;
     overflow: hidden;
 }
@@ -10,7 +9,6 @@
     display: flex;
     flex-direction: row;
     width: fit-content;
-    background-color: green;
 }
 
 .arrow {
@@ -36,4 +34,20 @@
     top: 50%;
     transform: translateY(-50%);
     transform: rotate(-45deg);
+}
+
+.slider-container__slide__dots{
+    position: absolute;
+    bottom: 3.5em;
+    left: 50%;
+    transform: translate(-50%,0)
+}
+
+.slider-container__slide__dots__dot{
+    height: 12px;
+    width: 12px;
+    background-color: #ffffff;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 1.5em;
 }

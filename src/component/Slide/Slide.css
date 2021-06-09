@@ -4,11 +4,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    position: relative;
 }
 
 .slide__content-container{
-    /* margin-bottom: 12em; */
     margin-top: 20vh;
     display: flex;
     flex-direction: column;
@@ -64,23 +62,6 @@
     .button-spacing{
         justify-content: space-around;
     }
-}
-
-
-.slide__dots{
-    position: absolute;
-    bottom: 3.5em;
-    left: 50%;
-    transform: translate(-50%,0)
-}
-
-.slide__dots__dot{
-    height: 12px;
-    width: 12px;
-    background-color: #ffffff;
-    border-radius: 50%;
-    display: inline-block;
-    margin-right: 1.5em;
 }
 
 

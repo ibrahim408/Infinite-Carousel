@@ -42,12 +42,6 @@ function Slide(props){
                      : null}
                 </div>
             </div>
-            <div className="slide__dots">
-                <span className="slide__dots__dot"></span>
-                <span className="slide__dots__dot"></span>
-                <span className="slide__dots__dot"></span>
-                <span className="slide__dots__dot"></span>
-            </div>
         </div>
     )
 }
