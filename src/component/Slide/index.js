@@ -2,42 +2,42 @@ import React from 'react'
 import './Slide.css'
 import useWindowDimensions from '../../hooks/useWindowDimensions'
 
-function Slide(props){
+function Slide({data}){
     const { width } = useWindowDimensions();
 
     const styleSlide = {
-        one: '',
-        two: 'second-slide',
-        three: 'third-slide'
+        center: '',
+        left: 'second-slide',
+        right: 'third-slide'
     }
     const contentContainer = {
-        one: '',
-        two: 'align-left',
-        three: 'align-right',
+        center: '',
+        left: 'align-left',
+        right: 'align-right',
     }  
     const buttonContainer = {
-        one: 'button-spacing',
-        two: '',
-        three: '',
+        center: 'button-spacing',
+        left: '',
+        right: '',
     }  
 
     return (
         <div style={{
-            backgroundImage: width > 600 ? `url(${props.image})` : `url(${props.imageSmall})`,
+            backgroundImage: width > 600 ? `url(${data.media.desktop})` : `url(${data.media.mobile})`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             backgroundRepeat: 'no-repeat',
-        }} className={`slide ${styleSlide[props.slide]}`}>
-            <div className={`slide__content-container ${contentContainer[props.slide]}`}>
-                <h1>{props.content.header}</h1>
-                <p>{props.content.paragraph}</p>
-                <div className={`slide__content-container__buttons ${buttonContainer[props.slide]}`}>
+        }} className={`slide ${styleSlide[data.ctaPosition]}`}>
+            <div className={`slide__content-container ${contentContainer[data.ctaPosition]}`}>
+                <h1>{data.title}</h1>
+                <p>{data.heading}</p>
+                <div className={`slide__content-container__buttons ${buttonContainer[data.ctaPosition]}`}>
                     <div className="slide__content-container__buttons__button">
-                        <h3>{props.content.buttonOne}</h3>
+                        <h3>{data.cta[0].label}</h3>
                     </div>
-                    {props.content.buttonTwo ? 
+                    {data.cta.length === 2 ? 
                         <div className="slide__content-container__buttons__button margin-left">
-                            <h3>{props.content.buttonTwo}</h3>
+                            <h3>{data.cta[1].label}</h3>
                         </div>
                      : null}
                 </div>

@@ -49,7 +49,7 @@ p {
     justify-content: center;
 }
 
-@media only screen and (min-width: 1050px) {
+@media only screen and (min-width: 990px) {
     .slide__content-container{
         margin-top: 0px; 
     }
