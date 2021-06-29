@@ -26,9 +26,8 @@
 
 .slider-container__slide__dots__dot{
     box-sizing:content-box;
-    height: 12px;
-    width: 12px;
-    background-color: #ffffff;
+    height: 15px;
+    width: 15px;
     border-radius: 50%;
     display: inline-block;
     margin-right: 1.5em;

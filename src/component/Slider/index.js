@@ -1,5 +1,6 @@
 import {useState, useEffect, useRef} from 'react'
 import useWindowDimensions from '../../hooks/useWindowDimensions'
+import useSwipe from '../../hooks/useSwipe'
 import Slide from '../Slide'
 import Arrow from './Arrow'
 import ToggleSwitch from './ToggleSwitch'
@@ -15,6 +16,7 @@ function Slider({slides,toggleState,setToggleState}){
     const slideRef = useRef(null)
     const autoPlay = useRef(null)
     const { width } = useWindowDimensions();
+    const {touchStart, touchEnd, handleTouchStart, handleTouchMove} = useSwipe();
 
     useEffect(() => {
         autoPlay.current = onNext;
@@ -41,30 +43,34 @@ function Slider({slides,toggleState,setToggleState}){
                 setTimer(t => t === 0 ? 3: t - 1);
             }
                 
-            timerIdRef.current = setInterval(next, 1500);
+            timerIdRef.current = setInterval(next, 1000);
             return () => clearInterval(timerIdRef.current);
 
         }
     },[]);
 
-    useEffect(() => {        
-        slideRef.current.style.transitionDuration = '0.5s';
-        slideRef.current.style.transform = `translate(-${width * currentSlide}px)`;
+    useEffect(() => {     
+        if (slideRef?.current?.style){
+            slideRef.current.style.transitionDuration = '0.5s';
+            slideRef.current.style.transform = `translate(-${width * currentSlide}px)`;
+    
+            console.log('before slideRef:', slideRef);
 
-        if (currentSlide === slideRef.current.children.length - 1){
-            setTimeout(() => {
-                slideRef.current.style.transitionDuration = '0.0s';
-                slideRef.current.style.transform = `translate(-${width}px)`;  
-                setCurrentSlide(1);
-            }, 1500)       
-        }
-
-        if (currentSlide === 0 ){
-            setTimeout(() => {
-                slideRef.current.style.transitionDuration = '0.0s';
-                slideRef.current.style.transform = `translate(-${width * (slideRef.current.children.length - 2)}px)`;  
-                setCurrentSlide(slideRef.current.children.length - 2);
-            }, 1500)            
+            if (currentSlide === slideRef.current.children.length - 1){
+                setTimeout(() => {
+                    slideRef.current.style.transitionDuration = '0.0s';
+                    slideRef.current.style.transform = `translate(-${width}px)`;  
+                    setCurrentSlide(1);
+                }, 1500)       
+            }
+    
+            if (currentSlide === 0 ){
+                setTimeout(() => {
+                    slideRef.current.style.transitionDuration = '0.0s';
+                    slideRef.current.style.transform = `translate(-${width * (slideRef.current.children.length - 2)}px)`;  
+                    setCurrentSlide(slideRef.current.children.length - 2);
+                }, 1500)            
+            }
         }
     },[currentSlide]);
 
@@ -94,22 +100,34 @@ function Slider({slides,toggleState,setToggleState}){
             setTimer(t => t === 0 ? 3: t - 1);
         }
             
-        timerIdRef.current = setInterval(next, 1500);
+        timerIdRef.current = setInterval(next, 1000);
     };
 
+    const handleTouchEnd = () => {
+        if (touchStart - touchEnd > 100){
+            onNext()
+        }
+        if (touchStart - touchEnd < - 100){
+            onPrev();
+        }
+    }
 
-
-    console.log('timer: ',timer);
     return (
-        <div onMouseLeave={startTimer} onMouseEnter={pauseTimer} className="slider-container">
+        <div className="slider-container"
+             onMouseLeave={startTimer} 
+             onMouseEnter={pauseTimer} 
+             onTouchStart={handleTouchStart} 
+             onTouchMove={handleTouchMove} 
+             onTouchEnd={handleTouchEnd} 
+        >
             <Arrow width={width} directionFunction={onPrev} direction="left" />  
             <Arrow width={width} directionFunction={onNext} direction="right" />     
-              <div ref={slideRef} className="slider-container__slide">
+              <div  ref={slideRef} className="slider-container__slide">
                 {slides.map(slide => 
                     <Slide data={slide} /> 
                 )}
               </div>    
-            <Dots currentSlide={currentSlide}/>            
+            <Dots currentSlide={currentSlide} timer={timer}/>            
             <ToggleSwitch toggleState={toggleState} setToggleState={setToggleState}  />            
         </div>
     )
