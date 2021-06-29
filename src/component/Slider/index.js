@@ -1,18 +1,30 @@
 import {useState, useEffect, useRef} from 'react'
 import useWindowDimensions from '../../hooks/useWindowDimensions'
 import Slide from '../Slide'
+import Arrow from './Arrow'
+import ToggleSwitch from './ToggleSwitch'
+import Dots from './Dots'
 import './Slider.css'
 
 function Slider({slides,toggleState,setToggleState}){
+
+
+    const [timer, setTimer] = useState(3);
     const [currentSlide,setCurrentSlide] = useState(1);
+    const timerIdRef = useRef(null);
     const slideRef = useRef(null)
     const autoPlay = useRef(null)
     const { width } = useWindowDimensions();
 
-
     useEffect(() => {
         autoPlay.current = onNext;
     });
+
+    useEffect(() => {
+        if (timer === 0){
+            autoPlay.current();
+        }
+     }, [timer]);
 
     useEffect(() => {
         if (slideRef.current.children.length){
@@ -26,11 +38,12 @@ function Slider({slides,toggleState,setToggleState}){
             slideRef.current.style.transform = `translate(-${width}px)`;
     
             const next = () => {
-                autoPlay.current();
+                setTimer(t => t === 0 ? 3: t - 1);
             }
-    
-            const interval = setInterval(next, 5000);
-            return () => clearInterval(interval);
+                
+            timerIdRef.current = setInterval(next, 1500);
+            return () => clearInterval(timerIdRef.current);
+
         }
     },[]);
 
@@ -72,30 +85,32 @@ function Slider({slides,toggleState,setToggleState}){
         }
     }
 
-    const renderSlides = () => {
-        return slides.map(slide => <Slide data={slide} /> )
-    }
+    const pauseTimer = () => {
+        clearInterval(timerIdRef.current);
+    };
 
+    const startTimer = () => {
+        const next = () => {
+            setTimer(t => t === 0 ? 3: t - 1);
+        }
+            
+        timerIdRef.current = setInterval(next, 1500);
+    };
+
+
+
+    console.log('timer: ',timer);
     return (
-        <div className="slider-container">
-
-              <div style={{display: width < 600 ? 'none' : null}} onClick={onPrev} className="arrow left"></div>
-              <div style={{display: width < 600 ? 'none' : null}} onClick={onNext} className="arrow right"></div>
-
+        <div onMouseLeave={startTimer} onMouseEnter={pauseTimer} className="slider-container">
+            <Arrow width={width} directionFunction={onPrev} direction="left" />  
+            <Arrow width={width} directionFunction={onNext} direction="right" />     
               <div ref={slideRef} className="slider-container__slide">
-                {renderSlides()}
+                {slides.map(slide => 
+                    <Slide data={slide} /> 
+                )}
               </div>    
-              
-              <div className="slider-container__slide__dots">
-                <span style={{backgroundColor: currentSlide === 1 ? '#BBB7A4' : null }} className="slider-container__slide__dots__dot"></span>
-                <span style={{backgroundColor: currentSlide === 2 ? '#BBB7A4' : null }} className="slider-container__slide__dots__dot"></span>
-                <span style={{backgroundColor: currentSlide === 3 ? '#BBB7A4' : null }} className="slider-container__slide__dots__dot"></span>
-            </div>  
-            
-            <div onClick={() => setToggleState(!toggleState)} className="slider-container__toggle">
-                {!toggleState ? <p>Shop</p> : <p>Cars</p>}
-            </div>
-            
+            <Dots currentSlide={currentSlide}/>            
+            <ToggleSwitch toggleState={toggleState} setToggleState={setToggleState}  />            
         </div>
     )
 }
