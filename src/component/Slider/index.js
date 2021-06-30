@@ -37,13 +37,12 @@ function Slider({slides}){
             slideRef.current.style.transitionDuration = '0.0s';
             slideRef.current.style.transform = `translate(-${width}px)`;
     
-            const timerHelper = () => {
+            const updateTimer = () => {
                 setTimer(t => t === 0 ? 3: t - 1);
             }
                 
-            timerIdRef.current = setInterval(timerHelper, 1000);
+            timerIdRef.current = setInterval(updateTimer, 1000);
             return () => clearInterval(timerIdRef.current);
-
         }
     },[]);
 
@@ -102,18 +101,18 @@ function Slider({slides}){
     };
 
     const handleStartTimer = () => {
-        const next = () => {
+        const updateTimer = () => {
             setTimer(t => t === 0 ? 3: t - 1);
         }
             
-        timerIdRef.current = setInterval(next, 1000);
+        timerIdRef.current = setInterval(updateTimer, 1000);
     };
 
     const handleTouchEnd = () => {
-        if (touchStart - touchEnd > 200){
+        if (touchStart - touchEnd > 150){
             onNext()
         }
-        if (touchStart - touchEnd < - 200){
+        if (touchStart - touchEnd < - 150){
             onPrev();
         }
     }
