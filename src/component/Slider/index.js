@@ -53,22 +53,24 @@ function Slider({slides,toggleState,setToggleState}){
         if (slideRef?.current?.style){
             slideRef.current.style.transitionDuration = '0.5s';
             slideRef.current.style.transform = `translate(-${width * currentSlide}px)`;
-    
-            console.log('before slideRef:', slideRef);
 
-            if (currentSlide === slideRef.current.children.length - 1){
+
+            if (currentSlide >= 4){
                 setTimeout(() => {
-                    slideRef.current.style.transitionDuration = '0.0s';
-                    slideRef.current.style.transform = `translate(-${width}px)`;  
-                    setCurrentSlide(1);
+                    if (slideRef?.current?.style){
+                        slideRef.current.style.transitionDuration = '0.0s';
+                        slideRef.current.style.transform = `translate(-${width}px)`;  
+                        setCurrentSlide(1);
+                    }
                 }, 1500)       
             }
-    
             if (currentSlide === 0 ){
                 setTimeout(() => {
-                    slideRef.current.style.transitionDuration = '0.0s';
-                    slideRef.current.style.transform = `translate(-${width * (slideRef.current.children.length - 2)}px)`;  
-                    setCurrentSlide(slideRef.current.children.length - 2);
+                    if (slideRef?.current?.style){
+                        slideRef.current.style.transitionDuration = '0.0s';
+                        slideRef.current.style.transform = `translate(-${width * (slideRef.current.children.length - 2)}px)`;  
+                        setCurrentSlide(slideRef.current.children.length - 2);
+                    }
                 }, 1500)            
             }
         }
@@ -82,13 +84,19 @@ function Slider({slides,toggleState,setToggleState}){
     const onPrev = () => {
         if (currentSlide > 0){
             setCurrentSlide(currentSlide - 1);
+            resetTimer();
         } 
     }
 
     const onNext = () => {
         if (currentSlide < slideRef.current.children.length - 1){
             setCurrentSlide(currentSlide + 1);
+            resetTimer();
         }
+    }
+
+    const resetTimer = () => {
+        setTimer(3);
     }
 
     const pauseTimer = () => {
@@ -127,8 +135,7 @@ function Slider({slides,toggleState,setToggleState}){
                     <Slide data={slide} /> 
                 )}
               </div>    
-            <Dots currentSlide={currentSlide} timer={timer}/>            
-            <ToggleSwitch toggleState={toggleState} setToggleState={setToggleState}  />            
+            <Dots currentSlide={currentSlide} timer={timer}/>                  
         </div>
     )
 }

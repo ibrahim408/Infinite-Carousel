@@ -4,6 +4,8 @@ import useWindowDimensions from '../../hooks/useWindowDimensions'
 
 function Slide({data}){
     const { width } = useWindowDimensions();
+    const imageUrl = width > 650 ? data.media.desktop : data.media.mobile;
+
 
     const styleSlide = {
         center: '',
@@ -22,12 +24,7 @@ function Slide({data}){
     }  
 
     return (
-        <div style={{
-            backgroundImage: width > 600 ? `url(${data.media.desktop})` : `url(${data.media.mobile})`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            backgroundRepeat: 'no-repeat',
-        }} className={`slide ${styleSlide[data.ctaPosition]}`}>
+        <div className={`slide ${styleSlide[data.ctaPosition]}`} style={{ backgroundImage:  `url(${imageUrl})`}} >
             <div className={`slide__content-container ${contentContainer[data.ctaPosition]}`}>
                 <h1>{data.title}</h1>
                 <p>{data.heading}</p>
