@@ -3,6 +3,7 @@ import './Slide.css'
 import useWindowDimensions from '../../hooks/useWindowDimensions'
 
 function Slide({data}){
+
     const { width } = useWindowDimensions();
     const imageUrl = width > 650 ? data.media.desktop : data.media.mobile;
 
@@ -29,13 +30,13 @@ function Slide({data}){
                 <h1>{data.title}</h1>
                 <p>{data.heading}</p>
                 <div className={`slide__content-container__buttons ${buttonContainer[data.ctaPosition]}`}>
-                    <div className="slide__content-container__buttons__button">
+                    <a href={data.cta[0].url} className="slide__content-container__buttons__button">
                         <h3>{data.cta[0].label}</h3>
-                    </div>
+                    </a>
                     {data.cta.length === 2 ? 
-                        <div className="slide__content-container__buttons__button margin-left">
+                        <a href={data.cta[1].url} className="slide__content-container__buttons__button margin-left">
                             <h3>{data.cta[1].label}</h3>
-                        </div>
+                        </a>
                      : null}
                 </div>
             </div>
