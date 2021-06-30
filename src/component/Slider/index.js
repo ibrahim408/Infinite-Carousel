@@ -3,15 +3,13 @@ import useWindowDimensions from '../../hooks/useWindowDimensions'
 import useSwipe from '../../hooks/useSwipe'
 import Slide from '../Slide'
 import Arrow from './Arrow'
-import ToggleSwitch from './ToggleSwitch'
 import Dots from './Dots'
 import './Slider.css'
 
-function Slider({slides,toggleState,setToggleState}){
+function Slider({slides}){
 
-
-    const [timer, setTimer] = useState(3);
     const [currentSlide,setCurrentSlide] = useState(1);
+    const [timer, setTimer] = useState(3);
     const timerIdRef = useRef(null);
     const slideRef = useRef(null)
     const autoPlay = useRef(null)
@@ -39,11 +37,11 @@ function Slider({slides,toggleState,setToggleState}){
             slideRef.current.style.transitionDuration = '0.0s';
             slideRef.current.style.transform = `translate(-${width}px)`;
     
-            const next = () => {
+            const timerHelper = () => {
                 setTimer(t => t === 0 ? 3: t - 1);
             }
                 
-            timerIdRef.current = setInterval(next, 1000);
+            timerIdRef.current = setInterval(timerHelper, 1000);
             return () => clearInterval(timerIdRef.current);
 
         }
@@ -99,11 +97,11 @@ function Slider({slides,toggleState,setToggleState}){
         setTimer(3);
     }
 
-    const pauseTimer = () => {
+    const handlePauseTimer = () => {
         clearInterval(timerIdRef.current);
     };
 
-    const startTimer = () => {
+    const handleStartTimer = () => {
         const next = () => {
             setTimer(t => t === 0 ? 3: t - 1);
         }
@@ -122,8 +120,8 @@ function Slider({slides,toggleState,setToggleState}){
 
     return (
         <div className="slider-container"
-             onMouseLeave={startTimer} 
-             onMouseEnter={pauseTimer} 
+             onMouseLeave={handleStartTimer} 
+             onMouseEnter={handlePauseTimer} 
              onTouchStart={handleTouchStart} 
              onTouchMove={handleTouchMove} 
              onTouchEnd={handleTouchEnd} 

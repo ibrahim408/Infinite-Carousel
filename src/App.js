@@ -1,21 +1,17 @@
 import './App.css';
 import Slider from './component/Slider'
-import Loading from './component/Loading'
+import LoadingPage from './component/LoadingPage'
+import ErrorPage from './component/ErrorPage'
 import useFetch from './hooks/useFetch'
-import useToggle from './hooks/useToggle'
-import * as Constants from './helper/constants';
 
-function App() {
 
-  const {toggleState,setToggleState} = useToggle();
-  const {result,error,loading} = useFetch(toggleState);
+const App = () => {
 
+  const {result,error,loading} = useFetch();
   
-
-  if (loading || result === null) return <Loading />
-  else if (error) return  <Loading />
-  else return <Slider slides={result} toggleState={toggleState} setToggleState={setToggleState} />
-
+  if (loading || result === null) return <LoadingPage />
+  else if (error) return  <ErrorPage />
+  else return <Slider slides={result}  />
 }
 
 export default App;

@@ -1,11 +1,7 @@
 import './Slider.css'
 
 const Dots = ({currentSlide, timer}) => {
-
-    // console.log('currentSlide: ',currentSlide);
-    // console.log('timer: ',timer);
-    // console.log('');
-
+    
     const color = {
         3: '#000000',
         2: '#808080',

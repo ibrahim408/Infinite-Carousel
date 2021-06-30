@@ -2,12 +2,12 @@ import React from 'react'
 import './Slide.css'
 import useWindowDimensions from '../../hooks/useWindowDimensions'
 
-function Slide({data}){
+const  Slide = ({data}) => {
 
     const { width } = useWindowDimensions();
+
     const imageUrl = width > 650 ? data.media.desktop : data.media.mobile;
-
-
+    
     const styleSlide = {
         center: '',
         left: 'second-slide',
