@@ -110,10 +110,10 @@ function Slider({slides}){
     };
 
     const handleTouchEnd = () => {
-        if (touchStart - touchEnd > 150){
+        if (touchStart - touchEnd > 200){
             onNext()
         }
-        if (touchStart - touchEnd < - 150){
+        if (touchStart - touchEnd < - 200){
             onPrev();
         }
     }
@@ -129,8 +129,8 @@ function Slider({slides}){
             <Arrow width={width} directionFunction={onPrev} direction="left" />  
             <Arrow width={width} directionFunction={onNext} direction="right" />     
               <div  ref={slideRef} className="slider-container__slide">
-                {slides.map(slide => 
-                    <Slide data={slide} /> 
+                {slides.map((slide,index) => 
+                    <Slide key={index} data={slide} /> 
                 )}
               </div>    
             <Dots currentSlide={currentSlide} timer={timer}/>                  
