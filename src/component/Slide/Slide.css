@@ -52,6 +52,15 @@ p {
     justify-content: center;
 }
 
+@media only screen and (min-width: 768px) and (max-width: 990px) {
+    .slide__content-container__buttons{
+        align-items: center;      
+    }
+    .slide__content-container__buttons__button{
+        width: 33vw;
+    }
+}
+
 @media only screen and (min-width: 990px) {
     .slide__content-container{
         margin-top: 0px; 
@@ -62,7 +71,7 @@ p {
     }
     .slide__content-container__buttons__button{
         margin-right: 0px;
-        padding: .5em 1.5em;
+        padding: .5em 2.5em;
     }
     .margin-left{
         margin-left: 0px;
